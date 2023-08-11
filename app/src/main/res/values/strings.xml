@@ -4,4 +4,20 @@
     <string name="sorting">sorting</string>
     <string name="clear">clear</string>
     <string name="cancel">Отмена</string>
+
+    <string-array name="departments">
+        <item>Все</item>
+        <item>Дизайн</item>
+        <item>Аналитика</item>
+        <item>Менеджмент</item>
+        <item>iOS</item>
+        <item>Android</item>
+        <item>QA</item>
+        <item>Бэк-офис</item>
+        <item>Frontend</item>
+        <item>HR</item>
+        <item>PR</item>
+        <item>Backend</item>
+        <item>Техподдержка</item>
+    </string-array>
 </resources>

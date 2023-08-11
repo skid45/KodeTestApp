@@ -10,7 +10,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
+import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
+import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
 import com.skid.kodetestapp.utils.autoAnimation
 
 class MainScreenFragment : Fragment() {
@@ -20,11 +24,14 @@ class MainScreenFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
+    private var departmentPagerAdapter: DepartmentPagerAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
+        departmentPagerAdapter = DepartmentPagerAdapter(this)
         return binding.root
     }
 
@@ -32,6 +39,12 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         searchBar()
+        viewPagerInit()
+        tab()
+    }
+
+    private fun viewPagerInit() {
+        binding.mainScreenViewPager.adapter = departmentPagerAdapter
     }
 
     private fun searchBar() = with(binding) {
@@ -76,8 +89,27 @@ class MainScreenFragment : Fragment() {
         }
     }
 
+    private fun tab() = with(binding) {
+        val tabTitles = resources.getStringArray(R.array.departments)
+        TabLayoutMediator(mainScreenTabLayout, mainScreenViewPager) { tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
+
+        mainScreenViewPager.apply {
+            currentItem = mainViewModel.department.value
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mainViewModel.onDepartmentChange(position)
+                }
+            })
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        departmentPagerAdapter = null
     }
 }
