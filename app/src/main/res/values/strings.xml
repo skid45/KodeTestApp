@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KodeTestApp</string>
+    <string name="search_bar_hint">Введите имя, тег, почту…</string>
+    <string name="sorting">sorting</string>
+    <string name="clear">clear</string>
+    <string name="cancel">Отмена</string>
 </resources>

@@ -9,6 +9,10 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
 
+
+        <item name="editTextStyle">@style/SearchBarStyle</item>
+        <item name="imageButtonStyle">@style/ImageButtonStyle</item>
+
     </style>
 
     <style name="Theme.KodeTestApp" parent="Base.Theme.KodeTestApp" />

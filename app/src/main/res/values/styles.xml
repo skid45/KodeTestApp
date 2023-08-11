@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="SearchBarStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/rounded_corner_shape</item>
+        <item name="android:backgroundTint">@color/colorSecondary</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Text.Medium</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.MaterialComponents.TextView">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ImageButtonStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
+
 
     <!--    Typography      -->
     <style name="TextAppearance" />
