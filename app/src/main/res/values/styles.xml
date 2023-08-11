@@ -21,6 +21,17 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
+    <style name="TabStyle" parent="Widget.Material3.TabLayout">
+        <item name="android:paddingStart">12dp</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabGravity">start</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Text.Medium</item>
+        <item name="tabTextColor">@color/colorTextTertiary</item>
+        <item name="tabSelectedTextColor">@color/colorTextPrimary</item>
+        <item name="tabIndicatorColor">@color/colorActivePrimary</item>
+        <item name="tabIndicatorFullWidth">true</item>
+    </style>
+
 
     <!--    Typography      -->
     <style name="TextAppearance" />

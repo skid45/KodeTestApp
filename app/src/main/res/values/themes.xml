@@ -12,6 +12,7 @@
 
         <item name="editTextStyle">@style/SearchBarStyle</item>
         <item name="imageButtonStyle">@style/ImageButtonStyle</item>
+        <item name="tabStyle">@style/TabStyle</item>
 
     </style>
 
