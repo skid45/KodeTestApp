@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorHint">#C3C3C6</color>
+    <color name="colorTextTertiary">#97979B</color>
+    <color name="colorTextPrimary">#050510</color>
+    <color name="colorTextSecondary">#55555C</color>
+
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#F7F7F8</color>
+    <color name="colorActivePrimary">#6534FF</color>
+    <color name="colorError">#F44336</color>
+
+    <color name="colorShimmerStart">#F3F3F6</color>
+    <color name="colorShimmerEnd">#FAFAFA</color>
 </resources>
