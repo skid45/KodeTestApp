@@ -32,6 +32,10 @@
         <item name="tabIndicatorFullWidth">true</item>
     </style>
 
+    <style name="CircleImageView">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 
     <!--    Typography      -->
     <style name="TextAppearance" />
