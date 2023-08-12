@@ -13,7 +13,7 @@ fun UserNetworkEntity.toUserItem(): UserItem {
         name = "$firstName $lastName",
         birthday = birthday,
         department = department.getDisplayDepartment(),
-        userTag = userTag,
+        userTag = userTag.lowercase(),
         phone = phone,
         monthDayOfBirthday = birthday.format(formatter).dropLastWhile { it == '.' }
     )

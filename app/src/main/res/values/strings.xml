@@ -4,6 +4,7 @@
     <string name="sorting">sorting</string>
     <string name="clear">clear</string>
     <string name="cancel">Отмена</string>
+    <string name="all">Все</string>
 
     <string-array name="departments">
         <item>Все</item>
