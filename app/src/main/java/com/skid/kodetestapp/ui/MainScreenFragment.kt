@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
+import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
 import com.skid.kodetestapp.utils.autoAnimation
 import kotlinx.coroutines.delay
@@ -53,6 +54,7 @@ class MainScreenFragment : Fragment() {
         swipeToRefresh()
         collectUserList()
         collectIsRefreshing()
+        collectSortBy()
     }
 
     private fun viewPagerInit() {
@@ -93,7 +95,11 @@ class MainScreenFragment : Fragment() {
         }
 
         mainScreenSortingButton.setOnClickListener {
-            // TODO (SortingBottomSheet)
+            val sortingBottomSheetFragment = SortingBottomSheetFragment()
+            sortingBottomSheetFragment.show(
+                requireActivity().supportFragmentManager,
+                SortingBottomSheetFragment.TAG
+            )
         }
 
         mainScreenClearButton.setOnClickListener {
@@ -153,6 +159,18 @@ class MainScreenFragment : Fragment() {
                         delay(500)
                         binding.mainScreenSwipeRefreshLayout.isRefreshing = false
                     }
+                }
+            }
+        }
+    }
+
+    private fun collectSortBy() = with(binding.mainScreenSortingButton) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.sortBy.collect { sorting ->
+                    imageTintList =
+                        if (sorting == Sorting.BY_ALPHABET) context.getColorStateList(R.color.colorHint)
+                        else context.getColorStateList(R.color.colorActivePrimary)
                 }
             }
         }

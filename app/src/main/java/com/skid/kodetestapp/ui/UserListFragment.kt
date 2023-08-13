@@ -51,6 +51,7 @@ class UserListFragment : Fragment() {
 
         recyclerViewInit()
         collectUserList()
+        collectSortBy()
     }
 
     private fun recyclerViewInit() = with(binding.userListRecyclerView) {
@@ -71,6 +72,16 @@ class UserListFragment : Fragment() {
                             }
                         }
                     userAdapter.submitList(filteredUserListByDepartment)
+                }
+            }
+        }
+    }
+
+    private fun collectSortBy() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.sortBy.collect { sorting ->
+                    userAdapter.sortBy = sorting
                 }
             }
         }

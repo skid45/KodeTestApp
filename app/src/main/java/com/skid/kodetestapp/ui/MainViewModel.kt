@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.skid.kodetestapp.KodeTestApp
+import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.domain.model.UserListItem
 import com.skid.kodetestapp.domain.usecases.GetFilteredUsersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,9 @@ class MainViewModel(
 
     private val _department = MutableStateFlow(0)
     val department = _department.asStateFlow()
+
+    private val _sortBy = MutableStateFlow(Sorting.BY_ALPHABET)
+    val sortBy = _sortBy.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing = _isRefreshing.asStateFlow()
@@ -45,6 +49,10 @@ class MainViewModel(
 
     fun onDepartmentChange(position: Int) {
         _department.value = position
+    }
+
+    fun onSortByChange(sortBy: Sorting) {
+        _sortBy.value = sortBy
     }
 
     fun onIsRefreshingChange(isRefreshing: Boolean) {

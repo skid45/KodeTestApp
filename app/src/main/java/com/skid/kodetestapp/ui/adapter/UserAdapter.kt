@@ -1,6 +1,7 @@
 package com.skid.kodetestapp.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,13 +10,21 @@ import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.SeparatorItemBinding
 import com.skid.kodetestapp.databinding.UserItemBinding
 import com.skid.kodetestapp.domain.model.SeparatorItem
+import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.domain.model.UserItem
 import com.skid.kodetestapp.domain.model.UserListItem
+import com.skid.kodetestapp.utils.Constants.BIRTHDAY
 import com.squareup.picasso.Picasso
 
 class UserAdapter(
     private val actionListener: UserAdapterActionListener,
 ) : ListAdapter<UserListItem, RecyclerView.ViewHolder>(DiffCallback()) {
+
+    var sortBy = Sorting.BY_ALPHABET
+        set(value) {
+            field = value
+            notifyItemRangeChanged(0, itemCount, BIRTHDAY)
+        }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -51,8 +60,27 @@ class UserAdapter(
         }
     }
 
-    class UserViewHolder(
-        private val binding: UserItemBinding,
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>,
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            val item = getItem(position)
+            if (holder is UserViewHolder) {
+                if (sortBy == Sorting.BY_BIRTHDAY) {
+                    holder.binding.userItemBirthday.text = (item as UserItem).monthDayOfBirthday
+                    holder.binding.userItemBirthday.visibility = View.VISIBLE
+                } else holder.binding.userItemBirthday.visibility = View.GONE
+            }
+        }
+
+    }
+
+    inner class UserViewHolder(
+        val binding: UserItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(userItem: UserItem) = with(binding) {
             root.tag = userItem
@@ -66,7 +94,11 @@ class UserAdapter(
             userItemName.text = userItem.name
             userItemTag.text = userItem.userTag
             userItemDepartment.text = userItem.department
-            userItemBirthday.text = userItem.monthDayOfBirthday
+
+            if (sortBy == Sorting.BY_BIRTHDAY) {
+                userItemBirthday.text = userItem.monthDayOfBirthday
+                userItemBirthday.visibility = View.VISIBLE
+            } else userItemBirthday.visibility = View.GONE
         }
     }
 
