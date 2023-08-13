@@ -41,6 +41,7 @@ class MainScreenFragment : Fragment() {
         searchBar()
         viewPagerInit()
         tab()
+        swipeToRefresh()
     }
 
     private fun viewPagerInit() {
@@ -104,6 +105,15 @@ class MainScreenFragment : Fragment() {
                     mainViewModel.onDepartmentChange(position)
                 }
             })
+        }
+    }
+
+    private fun swipeToRefresh() = with(binding.mainScreenSwipeRefreshLayout) {
+        setColorSchemeResources(R.color.colorActivePrimary, R.color.colorSecondary)
+        setProgressBackgroundColorSchemeResource(R.color.colorPrimary)
+
+        setOnRefreshListener {
+            mainViewModel.onIsRefreshingChange(true)
         }
     }
 

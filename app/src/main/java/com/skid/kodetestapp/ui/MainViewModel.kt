@@ -21,9 +21,14 @@ class MainViewModel(
     private val _department = MutableStateFlow(0)
     val department = _department.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    private val isRefreshing = _isRefreshing.asStateFlow()
+
     init {
         viewModelScope.launch {
-            _userList.value = userRepository.getUsers(true)
+            _isRefreshing.collect {
+                _userList.value = userRepository.getUsers(it)
+            }
         }
     }
 
@@ -33,5 +38,9 @@ class MainViewModel(
 
     fun onDepartmentChange(position: Int) {
         _department.value = position
+    }
+
+    fun onIsRefreshingChange(isRefreshing: Boolean) {
+        _isRefreshing.value = isRefreshing
     }
 }
