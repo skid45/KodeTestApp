@@ -37,6 +37,23 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <style name="RadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:textAppearance">@style/TextAppearance.Headline.Medium</item>
+        <item name="buttonTint">@color/colorActivePrimary</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">19dp</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="radioButtonStyle">@style/RadioButtonStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+        <item name="android:layout_marginHorizontal">8dp</item>
+    </style>
+
     <!--    Typography      -->
     <style name="TextAppearance" />
 

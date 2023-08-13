@@ -5,6 +5,9 @@
     <string name="clear">clear</string>
     <string name="cancel">Отмена</string>
     <string name="all">Все</string>
+    <string name="sorting_text">Сортировка</string>
+    <string name="by_alphabet">По алфавиту</string>
+    <string name="by_birthday">По дню рождения</string>
 
     <string-array name="departments">
         <item>Все</item>

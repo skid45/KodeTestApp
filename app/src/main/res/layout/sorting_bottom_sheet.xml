@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:layout_width="56dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corner_shape"
+        android:backgroundTint="@color/colorHint" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/sorting_text"
+        android:textAppearance="@style/TextAppearance.Title2.Semibold" />
+
+    <RadioGroup
+        android:id="@+id/sorting_bottom_sheet_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="34dp">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/sorting_bottom_sheet_radio_button_by_alphabet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/by_alphabet" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/sorting_bottom_sheet_radio_button_by_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/by_birthday" />
+
+    </RadioGroup>
+
+</LinearLayout>
