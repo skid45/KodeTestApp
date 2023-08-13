@@ -22,12 +22,13 @@ class MainViewModel(
     val department = _department.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
-    private val isRefreshing = _isRefreshing.asStateFlow()
+    val isRefreshing = _isRefreshing.asStateFlow()
 
     init {
         viewModelScope.launch {
             _isRefreshing.collect {
                 _userList.value = userRepository.getUsers(it)
+                _isRefreshing.value = false
             }
         }
     }

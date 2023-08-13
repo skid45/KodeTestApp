@@ -8,14 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
 import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
 import com.skid.kodetestapp.utils.autoAnimation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainScreenFragment : Fragment() {
 
@@ -42,6 +48,8 @@ class MainScreenFragment : Fragment() {
         viewPagerInit()
         tab()
         swipeToRefresh()
+        collectUserList()
+        collectIsRefreshing()
     }
 
     private fun viewPagerInit() {
@@ -114,6 +122,36 @@ class MainScreenFragment : Fragment() {
 
         setOnRefreshListener {
             mainViewModel.onIsRefreshingChange(true)
+        }
+    }
+
+    private fun collectUserList() = with(binding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.userList.collect {
+                    mainScreenSkeletonShimmerLayout.apply {
+                        if (isVisible) {
+                            delay(2000)
+                            visibility = View.GONE
+                            stopShimmer()
+                            mainScreenSwipeRefreshLayout.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun collectIsRefreshing() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.isRefreshing.collect { isRefreshing ->
+                    if (!isRefreshing) {
+                        delay(500)
+                        binding.mainScreenSwipeRefreshLayout.isRefreshing = false
+                    }
+                }
+            }
         }
     }
 
