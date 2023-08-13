@@ -31,6 +31,9 @@ class MainViewModel(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing = _isRefreshing.asStateFlow()
 
+    private val _wasSkeletonShown = MutableStateFlow(false)
+    val wasSkeletonShown = _wasSkeletonShown.asStateFlow()
+
     private val combine = combine(query, isRefreshing) { query, refresh ->
         _userList.value = getFilteredUsersUseCase(query, refresh)
         _isRefreshing.value = false
@@ -57,6 +60,10 @@ class MainViewModel(
 
     fun onIsRefreshingChange(isRefreshing: Boolean) {
         _isRefreshing.value = isRefreshing
+    }
+
+    fun onWasSkeletonShown(wasSkeletonShown: Boolean) {
+        _wasSkeletonShown.value = wasSkeletonShown
     }
 }
 

@@ -47,6 +47,9 @@ class MainScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (mainViewModel.wasSkeletonShown.value) {
+            hideSkeleton()
+        }
 
         searchBar()
         viewPagerInit()
@@ -138,13 +141,10 @@ class MainScreenFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.userList.collect {
-                    mainScreenSkeletonShimmerLayout.apply {
-                        if (isVisible) {
-                            delay(3000)
-                            visibility = View.GONE
-                            stopShimmer()
-                            mainScreenSwipeRefreshLayout.visibility = View.VISIBLE
-                        }
+                    if (mainScreenSkeletonShimmerLayout.isVisible) {
+                        delay(3000)
+                        hideSkeleton()
+                        mainViewModel.onWasSkeletonShown(true)
                     }
                 }
             }
@@ -174,6 +174,12 @@ class MainScreenFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun hideSkeleton() = with(binding) {
+        mainScreenSkeletonShimmerLayout.visibility = View.GONE
+        mainScreenSkeletonShimmerLayout.stopShimmer()
+        mainScreenSwipeRefreshLayout.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
