@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentUserListBinding
 import com.skid.kodetestapp.domain.model.UserItem
@@ -25,7 +26,9 @@ class UserListFragment : Fragment() {
 
     private val department by lazy { arguments?.getString(DEPARTMENT) }
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(activity?.application as KodeTestApp)
+    }
 
     private val userAdapter by lazy {
         UserAdapter(object : UserAdapterActionListener {

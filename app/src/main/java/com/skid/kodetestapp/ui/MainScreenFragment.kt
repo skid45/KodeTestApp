@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
 import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
@@ -28,7 +29,9 @@ class MainScreenFragment : Fragment() {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(activity?.application as KodeTestApp)
+    }
 
     private var departmentPagerAdapter: DepartmentPagerAdapter? = null
 
@@ -131,7 +134,7 @@ class MainScreenFragment : Fragment() {
                 mainViewModel.userList.collect {
                     mainScreenSkeletonShimmerLayout.apply {
                         if (isVisible) {
-                            delay(2000)
+                            delay(3000)
                             visibility = View.GONE
                             stopShimmer()
                             mainScreenSwipeRefreshLayout.visibility = View.VISIBLE
