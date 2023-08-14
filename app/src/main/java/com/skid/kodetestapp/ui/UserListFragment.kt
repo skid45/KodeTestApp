@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
@@ -19,6 +21,7 @@ import com.skid.kodetestapp.domain.model.UserListItem
 import com.skid.kodetestapp.ui.adapter.UserAdapter
 import com.skid.kodetestapp.ui.adapter.UserAdapterActionListener
 import com.skid.kodetestapp.utils.Constants.DEPARTMENT
+import com.skid.kodetestapp.utils.Constants.USER_ITEM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,7 +40,11 @@ class UserListFragment : Fragment() {
     private val userAdapter by lazy {
         UserAdapter(object : UserAdapterActionListener {
             override fun onUserDetails(userItem: UserItem) {
-                //TODO(Navigate to user details screen)
+                val bundle = bundleOf(USER_ITEM to userItem)
+                findNavController().navigate(
+                    resId = R.id.action_mainScreenFragment_to_userDetailsFragment,
+                    args = bundle
+                )
             }
         })
     }

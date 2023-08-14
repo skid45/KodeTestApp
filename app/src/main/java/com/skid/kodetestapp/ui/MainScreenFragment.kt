@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skid.kodetestapp.KodeTestApp
@@ -188,7 +189,8 @@ class MainScreenFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.networkError.collect { error ->
                     if (error != null) {
-                        // TODO(Navigate to CriticalErrorFragment)
+                        delay(2000)
+                        findNavController().navigate(R.id.action_mainScreenFragment_to_criticalErrorFragment)
                     }
                 }
             }
