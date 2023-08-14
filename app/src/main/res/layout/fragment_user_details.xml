@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.UserDetailsFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorSecondary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/user_details_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_back_arrow" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/user_details_avatar"
+                style="@style/CircleImageView"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/user_photo_stub" />
+
+            <LinearLayout
+                android:id="@+id/user_details_name_and_tag_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_details_avatar">
+
+                <TextView
+                    android:id="@+id/user_details_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Title1.Bold"
+                    tools:text="Алиса Иванова" />
+
+                <TextView
+                    android:id="@+id/user_details_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAppearance="@style/TextAppearance.Title3.Regular.TertiaryColor"
+                    tools:text="al" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/user_details_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.Caption1.Regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_details_name_and_tag_linear_layout"
+                tools:text="Дизайн" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:id="@+id/user_details_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="12dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="20dp"
+                android:textAppearance="@style/TextAppearance.Headline.Medium"
+                app:drawableStartCompat="@drawable/ic_favorite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="5 июня 1996" />
+
+            <TextView
+                android:id="@+id/user_details_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:textAppearance="@style/TextAppearance.Headline.Medium.TertiaryColor"
+                app:layout_constraintBottom_toBottomOf="@id/user_details_birthday"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/user_details_birthday"
+                tools:text="24 года" />
+
+            <TextView
+                android:id="@+id/user_details_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="20dp"
+                android:textAppearance="@style/TextAppearance.Headline.Medium"
+                app:drawableStartCompat="@drawable/ic_phone_alt"
+                app:layout_constraintTop_toBottomOf="@id/user_details_birthday"
+                tools:text="+7 (999) 900 90 90" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
