@@ -8,6 +8,8 @@
     <string name="sorting_text">Сортировка</string>
     <string name="by_alphabet">По алфавиту</string>
     <string name="by_birthday">По дню рождения</string>
+    <string name="we_didnt_find_anyone">Мы никого не нашли</string>
+    <string name="try_to_adjust_the_request">Попробуй скорректировать запрос</string>
 
     <string-array name="departments">
         <item>Все</item>

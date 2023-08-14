@@ -9,5 +9,37 @@
         android:id="@+id/user_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/user_item"/>
+        tools:listitem="@layout/user_item" />
+
+    <LinearLayout
+        android:id="@+id/user_list_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="@string/we_didnt_find_anyone"
+            android:src="@drawable/left_pointing_magnifying_glass_1f50d" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/we_didnt_find_anyone"
+            android:textAppearance="@style/TextAppearance.Title3.Semibold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/try_to_adjust_the_request"
+            android:textAppearance="@style/TextAppearance.Headline.Regular.TertiaryColor" />
+
+    </LinearLayout>
 </FrameLayout>

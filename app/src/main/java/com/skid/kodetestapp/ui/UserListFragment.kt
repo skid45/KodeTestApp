@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
 import com.skid.kodetestapp.databinding.FragmentUserListBinding
+import com.skid.kodetestapp.domain.model.SeparatorItem
 import com.skid.kodetestapp.domain.model.UserItem
+import com.skid.kodetestapp.domain.model.UserListItem
 import com.skid.kodetestapp.ui.adapter.UserAdapter
 import com.skid.kodetestapp.ui.adapter.UserAdapterActionListener
 import com.skid.kodetestapp.utils.Constants.DEPARTMENT
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserListFragment : Fragment() {
 
@@ -59,19 +63,21 @@ class UserListFragment : Fragment() {
         adapter = userAdapter
     }
 
-    private fun collectUserList() {
+    private fun collectUserList() = with(binding) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.userList.collect { userList ->
                     val filteredUserListByDepartment =
-                        if (department == getString(R.string.all) || department == null) userList
-                        else {
-                            userList.filter {
-                                if (it is UserItem) it.department == department
-                                else true
-                            }
-                        }
+                        filteredUsersByDepartment(userList, department)
                     userAdapter.submitList(filteredUserListByDepartment)
+
+                    if (filteredUserListByDepartment.isEmpty()) {
+                        userListRecyclerView.visibility = View.GONE
+                        userListEmptyView.visibility = View.VISIBLE
+                    } else {
+                        userListRecyclerView.visibility = View.VISIBLE
+                        userListEmptyView.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -85,6 +91,26 @@ class UserListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private suspend fun filteredUsersByDepartment(
+        userList: List<UserListItem>,
+        department: String?,
+    ): List<UserListItem> = withContext(Dispatchers.IO) {
+        val filteredUserListByDepartment =
+            if (department == getString(R.string.all) || department == null) userList
+            else {
+                userList.filter {
+                    if (it is UserItem) it.department == department
+                    else true
+                }
+            }
+
+        if (filteredUserListByDepartment.size == 1 &&
+            filteredUserListByDepartment.first() is SeparatorItem
+        ) {
+            emptyList()
+        } else filteredUserListByDepartment
     }
 
     override fun onDestroyView() {
