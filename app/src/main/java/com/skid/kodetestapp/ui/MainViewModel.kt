@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.domain.model.UserListItem
-import com.skid.kodetestapp.domain.usecases.GetFilteredUsersUseCase
+import com.skid.kodetestapp.domain.usecases.GetFilteredAndSortedUsersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val getFilteredUsersUseCase: GetFilteredUsersUseCase,
+    private val getFilteredAndSortedUsersUseCase: GetFilteredAndSortedUsersUseCase,
 ) : ViewModel() {
 
     private val _userList = MutableStateFlow(emptyList<UserListItem>())
@@ -34,8 +34,8 @@ class MainViewModel(
     private val _wasSkeletonShown = MutableStateFlow(false)
     val wasSkeletonShown = _wasSkeletonShown.asStateFlow()
 
-    private val combine = combine(query, isRefreshing) { query, refresh ->
-        _userList.value = getFilteredUsersUseCase(query, refresh)
+    private val combine = combine(query, sortBy, isRefreshing) { query, sortBy, refresh ->
+        _userList.value = getFilteredAndSortedUsersUseCase(query, sortBy, refresh)
         _isRefreshing.value = false
     }
 
@@ -71,7 +71,7 @@ class MainViewModel(
 class MainViewModelFactory(private val application: KodeTestApp) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(application.getFilteredUsersUseCase) as T
+            return MainViewModel(application.getFilteredAndSortedUsersUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
