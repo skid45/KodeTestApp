@@ -1,9 +1,11 @@
 package com.skid.kodetestapp.domain.usecases
 
+import com.skid.kodetestapp.domain.model.SeparatorItem
 import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.domain.model.UserItem
 import com.skid.kodetestapp.domain.model.UserListItem
 import com.skid.kodetestapp.domain.repositories.UserRepository
+import java.time.LocalDate
 
 class GetFilteredAndSortedUsersUseCase(
     private val userRepository: UserRepository,
@@ -30,7 +32,26 @@ class GetFilteredAndSortedUsersUseCase(
     private fun sortedUsers(userList: List<UserItem>, sortBy: Sorting): List<UserListItem> {
         return when (sortBy) {
             Sorting.BY_ALPHABET -> userList.sortedBy { it.name }
-            Sorting.BY_BIRTHDAY -> userList // TODO(Sorting by birthday)
+            Sorting.BY_BIRTHDAY -> sortByBirthday(userList)
+        }
+    }
+
+    private fun sortByBirthday(userList: List<UserItem>): List<UserListItem> {
+        val now = LocalDate.now()
+        val sortedUserList = userList.sortedWith(compareBy {
+            val birthday = it.birthday.withYear(now.year)
+            if (birthday.isBefore(now)) birthday.plusYears(1) else birthday
+        })
+
+        val separatorIndex = sortedUserList.indexOfFirst { userItem ->
+            userItem.birthday.withYear(now.year).isBefore(now)
+        }
+
+        return if (separatorIndex == -1) sortedUserList
+        else mutableListOf<UserListItem>().apply {
+            addAll(sortedUserList.subList(0, separatorIndex))
+            add(separatorIndex, SeparatorItem((now.year + 1).toString()))
+            addAll(sortedUserList.subList(separatorIndex, sortedUserList.size))
         }
     }
 }
