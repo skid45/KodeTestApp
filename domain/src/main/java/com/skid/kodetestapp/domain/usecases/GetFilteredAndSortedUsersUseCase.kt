@@ -15,10 +15,14 @@ class GetFilteredAndSortedUsersUseCase(
         query: String,
         sortBy: Sorting,
         refresh: Boolean,
-    ): List<UserListItem> {
-        val userList = userRepository.getUsers(refresh)
-        val filteredUserList = filteredUsers(userList, query)
-        return sortedUsers(filteredUserList, sortBy)
+    ): Result<List<UserListItem>> {
+        val result = userRepository.getUsers(refresh)
+        if (result.isSuccess) {
+            val filteredUserList = filteredUsers(result.getOrNull()!!, query)
+            val sortedUserList = sortedUsers(filteredUserList, sortBy)
+            return Result.success(sortedUserList)
+        }
+        return result
     }
 
     private fun filteredUsers(userList: List<UserItem>, query: String): List<UserItem> {

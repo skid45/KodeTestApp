@@ -8,10 +8,10 @@ import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.domain.model.UserListItem
 import com.skid.kodetestapp.domain.usecases.GetFilteredAndSortedUsersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.stateIn
 
 class MainViewModel(
     private val getFilteredAndSortedUsersUseCase: GetFilteredAndSortedUsersUseCase,
@@ -34,16 +34,19 @@ class MainViewModel(
     private val _wasSkeletonShown = MutableStateFlow(false)
     val wasSkeletonShown = _wasSkeletonShown.asStateFlow()
 
-    private val combine = combine(query, sortBy, isRefreshing) { query, sortBy, refresh ->
-        _userList.value = getFilteredAndSortedUsersUseCase(query, sortBy, refresh)
+    val networkError = combine(
+        query, sortBy, isRefreshing
+    ) { query, sortBy, refresh ->
+        val result = getFilteredAndSortedUsersUseCase(query, sortBy, refresh)
         _isRefreshing.value = false
-    }
+        return@combine if (result.isSuccess) {
+            _userList.value = result.getOrNull()!!
+            null
+        } else result.exceptionOrNull()?.localizedMessage
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     init {
         _isRefreshing.value = true
-        viewModelScope.launch {
-            combine.collect()
-        }
     }
 
     fun onQueryChange(query: String) {

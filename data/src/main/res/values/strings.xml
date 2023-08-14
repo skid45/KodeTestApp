@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_error">Не могу обновить данные.\nЧто-то пошло не так.</string>
+    <string name="network_connection_error">Не могу обновить данные.\nПроверь соединение с интернетом.</string>
+</resources>

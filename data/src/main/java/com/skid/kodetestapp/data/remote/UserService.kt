@@ -3,6 +3,7 @@ package com.skid.kodetestapp.data.remote
 import com.google.gson.GsonBuilder
 import com.skid.kodetestapp.data.model.ResponseNetworkEntity
 import com.skid.kodetestapp.data.utils.LocalDateDeserializer
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -15,7 +16,7 @@ interface UserService {
     @Headers("Prefer: code=200, example=success")
 //    @Headers("Prefer: code=200, dynamic=true")
 //    @Headers("Prefer: code=500, example=error-500")
-    suspend fun getUsers(): ResponseNetworkEntity
+    suspend fun getUsers(): Response<ResponseNetworkEntity>
 }
 
 fun UserService(): UserService {

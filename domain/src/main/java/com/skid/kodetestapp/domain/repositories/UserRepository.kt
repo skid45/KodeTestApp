@@ -4,5 +4,5 @@ import com.skid.kodetestapp.domain.model.UserItem
 
 interface UserRepository {
 
-    suspend fun getUsers(refresh: Boolean): List<UserItem>
+    suspend fun getUsers(refresh: Boolean): Result<List<UserItem>>
 }

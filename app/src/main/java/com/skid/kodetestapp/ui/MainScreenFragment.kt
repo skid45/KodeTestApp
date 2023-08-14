@@ -58,6 +58,7 @@ class MainScreenFragment : Fragment() {
         collectUserList()
         collectIsRefreshing()
         collectSortBy()
+        collectNetworkError()
     }
 
     private fun viewPagerInit() {
@@ -180,6 +181,18 @@ class MainScreenFragment : Fragment() {
         mainScreenSkeletonShimmerLayout.visibility = View.GONE
         mainScreenSkeletonShimmerLayout.stopShimmer()
         mainScreenSwipeRefreshLayout.visibility = View.VISIBLE
+    }
+
+    private fun collectNetworkError() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.networkError.collect { error ->
+                    if (error != null) {
+                        // TODO(Navigate to CriticalErrorFragment)
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
