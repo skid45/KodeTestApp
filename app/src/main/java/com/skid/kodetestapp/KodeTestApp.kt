@@ -9,7 +9,9 @@ import com.skid.kodetestapp.domain.usecases.GetFilteredAndSortedUsersUseCase
 class KodeTestApp : Application() {
     private val userService by lazy { UserService() }
 
-    private val userRepository: UserRepository by lazy { UserRepositoryImpl(userService) }
+    private val userRepository: UserRepository by lazy {
+        UserRepositoryImpl(userService, applicationContext)
+    }
 
     val getFilteredAndSortedUsersUseCase by lazy { GetFilteredAndSortedUsersUseCase(userRepository) }
 }
