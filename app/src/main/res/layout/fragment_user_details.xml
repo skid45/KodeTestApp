@@ -96,6 +96,7 @@
                 android:paddingVertical="20dp"
                 android:textAppearance="@style/TextAppearance.Headline.Medium"
                 app:drawableStartCompat="@drawable/ic_favorite"
+                app:drawableTint="@color/colorTextPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="5 июня 1996" />
@@ -122,6 +123,7 @@
                 android:paddingVertical="20dp"
                 android:textAppearance="@style/TextAppearance.Headline.Medium"
                 app:drawableStartCompat="@drawable/ic_phone_alt"
+                app:drawableTint="@color/colorTextPrimary"
                 app:layout_constraintTop_toBottomOf="@id/user_details_birthday"
                 tools:text="+7 (999) 900 90 90" />
 

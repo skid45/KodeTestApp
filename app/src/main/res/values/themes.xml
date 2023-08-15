@@ -5,10 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/colorActivePrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSurface">@color/colorPrimary</item>
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
-
 
         <item name="editTextStyle">@style/SearchBarStyle</item>
         <item name="imageButtonStyle">@style/ImageButtonStyle</item>
