@@ -30,4 +30,5 @@
     <string name="some_supermind_broke_everything">Какой-то сверхразум все сломал</string>
     <string name="we_will_try_to_fix_it_quickly">Постараемся быстро починить</string>
     <string name="try_again">Попробовать снова</string>
+    <string name="loading">Секундочку, гружусь…</string>
 </resources>

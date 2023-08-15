@@ -1,6 +1,7 @@
 package com.skid.kodetestapp.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,9 +18,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
+import com.skid.kodetestapp.databinding.CustomSnackbarLayoutBinding
 import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
 import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
@@ -37,6 +42,14 @@ class MainScreenFragment : Fragment() {
     }
 
     private var departmentPagerAdapter: DepartmentPagerAdapter? = null
+
+    private val loadSnackbar by lazy {
+        makeSnackbar(
+            text = getString(R.string.loading),
+            colorResId = R.color.colorActivePrimary,
+            duration = Snackbar.LENGTH_INDEFINITE
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -159,9 +172,11 @@ class MainScreenFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.isRefreshing.collect { isRefreshing ->
-                    if (!isRefreshing) {
+                    if (isRefreshing) loadSnackbar.show()
+                    else {
                         delay(500)
                         binding.mainScreenSwipeRefreshLayout.isRefreshing = false
+                        loadSnackbar.dismiss()
                     }
                 }
             }
@@ -191,12 +206,31 @@ class MainScreenFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.networkError.collect { error ->
                     if (error != null) {
-                        delay(2000)
-                        findNavController().navigate(R.id.action_mainScreenFragment_to_criticalErrorFragment)
+                        if (!mainViewModel.wasSkeletonShown.value) {
+                            delay(2000)
+                            findNavController().navigate(R.id.action_mainScreenFragment_to_criticalErrorFragment)
+                        } else {
+                            delay(500)
+                            val errorSnackbar =
+                                makeSnackbar(error, R.color.colorError, Snackbar.LENGTH_LONG)
+                            errorSnackbar.show()
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun makeSnackbar(text: String, @ColorRes colorResId: Int, duration: Int): Snackbar {
+        val snackbar = Snackbar.make(binding.root, "", duration)
+        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+        snackbar.view.setPadding(0, 0, 0, 80)
+        val snackbarLayout = snackbar.view as SnackbarLayout
+        val snackbarLayoutBinding = CustomSnackbarLayoutBinding.inflate(layoutInflater)
+        snackbarLayoutBinding.root.setCardBackgroundColor(requireContext().getColor(colorResId))
+        snackbarLayoutBinding.customSnackbarText.text = text
+        snackbarLayout.addView(snackbarLayoutBinding.root, 0)
+        return snackbar
     }
 
     override fun onDestroyView() {
