@@ -1,8 +1,11 @@
 package com.skid.kodetestapp.utils
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.annotation.ColorRes
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import java.io.Serializable
@@ -24,6 +27,13 @@ fun Long.getYearsDeclension(): String {
         mod10 == 1L -> "год"
         mod10 in 2L..4L -> "года"
         else -> "лет"
+    }
+}
+
+fun Activity.updateStatusBarColor(@ColorRes id: Int) {
+    this.window.apply {
+        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        statusBarColor = getColor(id)
     }
 }
 

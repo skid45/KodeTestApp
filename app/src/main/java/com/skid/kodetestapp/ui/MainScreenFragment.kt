@@ -23,6 +23,7 @@ import com.skid.kodetestapp.databinding.FragmentMainScreenBinding
 import com.skid.kodetestapp.domain.model.Sorting
 import com.skid.kodetestapp.ui.adapter.DepartmentPagerAdapter
 import com.skid.kodetestapp.utils.autoAnimation
+import com.skid.kodetestapp.utils.updateStatusBarColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,6 +44,7 @@ class MainScreenFragment : Fragment() {
     ): View {
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
         departmentPagerAdapter = DepartmentPagerAdapter(this)
+        activity?.updateStatusBarColor(R.color.colorPrimary)
         return binding.root
     }
 

@@ -13,6 +13,7 @@ import com.skid.kodetestapp.domain.model.UserItem
 import com.skid.kodetestapp.utils.Constants.USER_ITEM
 import com.skid.kodetestapp.utils.customGetSerializable
 import com.skid.kodetestapp.utils.getYearsDeclension
+import com.skid.kodetestapp.utils.updateStatusBarColor
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,6 +30,7 @@ class UserDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
+        activity?.updateStatusBarColor(R.color.colorSecondary)
         return binding.root
     }
 
