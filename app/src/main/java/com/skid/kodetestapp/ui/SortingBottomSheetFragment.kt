@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.skid.kodetestapp.KodeTestApp
 import com.skid.kodetestapp.R
@@ -18,6 +19,12 @@ class SortingBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(activity?.application as KodeTestApp)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val behavior = BottomSheetBehavior.from(requireView().parent as View)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onCreateView(
